@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:simple_admin/core/network/dio_client.dart';
 import 'package:simple_admin/features/presentation/pages/influencer_directory_page.dart';
 
 void main() {
+  DioClient.init();
   runApp(const MyApp());
 }
 

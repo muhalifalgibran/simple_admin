@@ -2,8 +2,29 @@ import 'package:data_table_2/data_table_2.dart';
 import 'package:flutter/material.dart';
 import 'package:simple_admin/features/presentation/widgets/tag_widget.dart';
 
-class InfluencerDirectoryPage extends StatelessWidget {
+class InfluencerDirectoryPage extends StatefulWidget {
   const InfluencerDirectoryPage({super.key});
+
+  @override
+  State<InfluencerDirectoryPage> createState() =>
+      _InfluencerDirectoryPageState();
+}
+
+class _InfluencerDirectoryPageState extends State<InfluencerDirectoryPage> {
+  void _sort<T>(
+    // Comparable<T> Function(Dessert d) getField,
+    int columnIndex,
+    bool ascending,
+  ) {
+    // _dessertsDataSource.sort<T>(getField, ascending);
+    setState(() {
+      _sortColumnIndex.value = columnIndex;
+      _sortAscending.value = ascending;
+    });
+  }
+
+  final RestorableBool _sortAscending = RestorableBool(true);
+  final RestorableIntN _sortColumnIndex = RestorableIntN(null);
 
   @override
   Widget build(BuildContext context) {
@@ -33,12 +54,10 @@ class InfluencerDirectoryPage extends StatelessWidget {
                   Colors.purple.shade700,
                 ],
               )),
-              child: Container(
-                child: const Center(
-                  child: Text(
-                    'Influencer Directory',
-                    style: TextStyle(color: Colors.white, fontSize: 18),
-                  ),
+              child: const Center(
+                child: Text(
+                  'Influencer Directory',
+                  style: TextStyle(color: Colors.white, fontSize: 18),
                 ),
               ),
             ),
@@ -49,8 +68,9 @@ class InfluencerDirectoryPage extends StatelessWidget {
                 // mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  Wrap(
+                    // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+
                     children: [
                       TagWidget(onChange: (value) {}),
                       TagWidget(onChange: (value) {}),
