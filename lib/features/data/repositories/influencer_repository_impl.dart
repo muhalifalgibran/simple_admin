@@ -1,14 +1,14 @@
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
+import 'package:simple_admin/core/di/service_locator.dart';
 import 'package:simple_admin/core/error/failure.dart';
 import 'package:simple_admin/features/data/datasources/influencer_remote_data_source.dart';
 import 'package:simple_admin/features/domain/entities/influencer.dart';
 import 'package:simple_admin/features/domain/repositories/influencer_repository.dart';
 
 class InfluencerRepositoryImpl implements InfluencerRepository {
-  InfluencerRemoteDataSource dataSource;
+  final dataSource = getIt<InfluencerRemoteDataSource>();
 
-  InfluencerRepositoryImpl(this.dataSource);
   @override
   Future<Either<Failure, List<Influencer>>> getInfluencer(int page) async {
     try {

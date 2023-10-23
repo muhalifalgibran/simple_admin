@@ -7,7 +7,7 @@ abstract class InfluencerRemoteDataSource {
 }
 
 class InfluencerRemoteDataSourceImpl implements InfluencerRemoteDataSource {
-  final DioClient _client = DioClient.instance;
+  final DioClient _client = DioClient();
   @override
   Future<List<Influencer>> getUser(int page) async {
     final result = await _client.get('users?page=$page');
