@@ -29,7 +29,7 @@ class MyApp extends StatelessWidget {
             useMaterial3: true,
             textTheme: GoogleFonts.montserratTextTheme(),
           ),
-          home: InfluencerDirectoryPage()),
+          home: const InfluencerDirectoryPage()),
     );
   }
 }

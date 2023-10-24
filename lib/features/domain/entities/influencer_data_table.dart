@@ -53,9 +53,8 @@ class InfluencerDataTable extends DataTableSource {
 
   InfluencerDataTable(
     this.context,
-    this.influencers, [
-    this.hasZebraStripes = false,
-  ]) {
+    this.influencers,
+  ) {
     _allInfluencers = influencers;
   }
 
@@ -67,8 +66,6 @@ class InfluencerDataTable extends DataTableSource {
   // since we use search and filter
   late List<InfluencerData> _allInfluencers;
   int _selectedCount = 0;
-  bool hasZebraStripes = false;
-
   // sort function to sort based on selectedField
   void sort<T>(
       Comparable<T> Function(InfluencerData d) getField, bool ascending) {
@@ -128,7 +125,7 @@ class InfluencerDataTable extends DataTableSource {
       selected: influencer.selected,
       color: color != null
           ? MaterialStateProperty.all(color)
-          : (hasZebraStripes && index.isEven
+          : (index.isEven
               ? MaterialStateProperty.all(Theme.of(context).highlightColor)
               : null),
       onSelectChanged: (value) {

@@ -1,6 +1,7 @@
 import 'package:data_table_2/data_table_2.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:simple_admin/features/domain/entities/influencer.dart';
 import 'package:simple_admin/features/domain/entities/influencer_data_table.dart';
 import 'package:simple_admin/features/presentation/providers/influencer_provider.dart';
 import 'package:simple_admin/features/presentation/widgets/pager_widget.dart';
@@ -31,7 +32,7 @@ class _InfluencerDirectoryPageState extends State<InfluencerDirectoryPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color.fromARGB(255, 120, 119, 119),
+      backgroundColor: Color.fromARGB(255, 210, 207, 207),
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -182,7 +183,9 @@ class _InfluencerDirectoryPageState extends State<InfluencerDirectoryPage> {
                     padding: const EdgeInsets.all(16),
                     child: PaginatedDataTable2(
                       headingRowColor: MaterialStateColor.resolveWith(
-                          (states) => Colors.grey[200]!),
+                          (states) => Color.fromARGB(255, 241, 184, 245)!),
+
+                      hidePaginator: true,
                       source: context
                           .select<InfluencerProvider, InfluencerDataTable>(
                               (value) =>
@@ -190,8 +193,6 @@ class _InfluencerDirectoryPageState extends State<InfluencerDirectoryPage> {
                                   InfluencerDataTable.empty(context)),
                       columnSpacing: 12,
                       rowsPerPage: 6,
-                      horizontalMargin: 12,
-                      wrapInCard: true,
                       minWidth: 800,
                       sortColumnIndex:
                           context.read<InfluencerProvider>().sortColumnIndex,
@@ -199,34 +200,29 @@ class _InfluencerDirectoryPageState extends State<InfluencerDirectoryPage> {
                           context.read<InfluencerProvider>().sortAscending,
                       sortArrowIcon: Icons.keyboard_arrow_up,
                       sortArrowAnimationDuration: Duration.zero,
-                      controller: _pageController,
+                      // controller: _pageController,
                       empty: Center(
                           child: Container(
                               padding: const EdgeInsets.all(20),
                               color: Colors.grey[200],
                               child: const Text('No data'))),
-                      header: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            const Text('Table of influencer'),
-                            PagerWidget(
-                                currentPage: context
-                                        .watch<InfluencerProvider>()
-                                        .influencers
-                                        ?.page ??
-                                    1,
-                                totalPage: context
-                                        .watch<InfluencerProvider>()
-                                        .influencers
-                                        ?.totalPages ??
-                                    1,
-                                onUpdate: (updated) {
-                                  context
-                                      .read<InfluencerProvider>()
-                                      .getInfluencer(context, updated);
-                                  setState(() {});
-                                })
-                          ]),
+                      header: PagerWidget(
+                          currentPage: context
+                                  .watch<InfluencerProvider>()
+                                  .influencers
+                                  ?.page ??
+                              1,
+                          totalPage: context
+                                  .watch<InfluencerProvider>()
+                                  .influencers
+                                  ?.totalPages ??
+                              1,
+                          onUpdate: (updated) {
+                            context
+                                .read<InfluencerProvider>()
+                                .getInfluencer(context, updated);
+                            setState(() {});
+                          }),
                       border: TableBorder(
                         top: const BorderSide(color: Colors.black),
                         bottom: BorderSide(color: Colors.grey[300]!),
@@ -238,7 +234,10 @@ class _InfluencerDirectoryPageState extends State<InfluencerDirectoryPage> {
                       ),
                       columns: [
                         DataColumn2(
-                          label: const Text('ID'),
+                          label: const Text(
+                            'ID',
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
                           size: ColumnSize.S,
                           onSort: (columnIndex, ascending) {
                             context.read<InfluencerProvider>().sort<String>(
@@ -247,10 +246,16 @@ class _InfluencerDirectoryPageState extends State<InfluencerDirectoryPage> {
                           },
                         ),
                         const DataColumn(
-                          label: Text('Avatar'),
+                          label: Text(
+                            'Avatar',
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
                         ),
                         DataColumn(
-                          label: const Text('First Name'),
+                          label: const Text(
+                            'First Name',
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
                           onSort: (columnIndex, ascending) {
                             context.read<InfluencerProvider>().sort<String>(
                                 (d) => d.firstName, columnIndex, ascending);
@@ -258,7 +263,10 @@ class _InfluencerDirectoryPageState extends State<InfluencerDirectoryPage> {
                           },
                         ),
                         DataColumn(
-                          label: const Text('Last Name'),
+                          label: const Text(
+                            'Last Name',
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
                           onSort: (columnIndex, ascending) {
                             context.read<InfluencerProvider>().sort<String>(
                                 (d) => d.lastName, columnIndex, ascending);
@@ -266,7 +274,10 @@ class _InfluencerDirectoryPageState extends State<InfluencerDirectoryPage> {
                           },
                         ),
                         DataColumn2(
-                          label: const Text('Email'),
+                          label: const Text(
+                            'Email',
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
                           size: ColumnSize.L,
                           onSort: (columnIndex, ascending) {
                             context.read<InfluencerProvider>().sort<String>(
@@ -275,7 +286,10 @@ class _InfluencerDirectoryPageState extends State<InfluencerDirectoryPage> {
                           },
                         ),
                         DataColumn(
-                          label: const Text('Location'),
+                          label: const Text(
+                            'Location',
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
                           onSort: (columnIndex, ascending) {
                             context.read<InfluencerProvider>().sort<String>(
                                 (d) => d.location, columnIndex, ascending);
@@ -283,7 +297,10 @@ class _InfluencerDirectoryPageState extends State<InfluencerDirectoryPage> {
                           },
                         ),
                         DataColumn(
-                          label: const Text('Role'),
+                          label: const Text(
+                            'Role',
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
                           onSort: (columnIndex, ascending) {
                             context.read<InfluencerProvider>().sort<String>(
                                 (d) => d.role, columnIndex, ascending);

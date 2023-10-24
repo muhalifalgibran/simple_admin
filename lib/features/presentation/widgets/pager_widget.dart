@@ -41,9 +41,12 @@ class _PagerWidgetState extends State<PagerWidget> {
           ),
         ),
         Container(
-          width: 130,
+          width: 70,
           margin: const EdgeInsets.symmetric(horizontal: 2),
-          child: Text('Page ${widget.currentPage} of ${widget.totalPage}'),
+          child: Text(
+            'Page ${widget.currentPage} of ${widget.totalPage}',
+            style: const TextStyle(fontSize: 12),
+          ),
         ),
         // invisible if reach the max page
         SizedBox(
