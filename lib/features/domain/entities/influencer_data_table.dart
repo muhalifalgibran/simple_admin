@@ -11,7 +11,7 @@ class RestorableInfluencerSelections extends RestorableProperty<Set<int>> {
 
   // Takes a list of [Influencer]s and saves the row indices of selected rows
   // into a [Set].
-  void setDessertSelections(List<Influencer> influencers) {
+  void setDessertSelections(List<InfluencerData> influencers) {
     final updatedSet = <int>{};
     for (var i = 0; i < influencers.length; i += 1) {
       var influencer = influencers[i];
@@ -62,15 +62,16 @@ class InfluencerDataTable extends DataTableSource {
   final BuildContext context;
 
   // for data
-  late List<Influencer> influencers;
+  late List<InfluencerData> influencers;
   // for keep our data remains the original
   // since we use search and filter
-  late List<Influencer> _allInfluencers;
+  late List<InfluencerData> _allInfluencers;
   int _selectedCount = 0;
   bool hasZebraStripes = false;
 
   // sort function to sort based on selectedField
-  void sort<T>(Comparable<T> Function(Influencer d) getField, bool ascending) {
+  void sort<T>(
+      Comparable<T> Function(InfluencerData d) getField, bool ascending) {
     influencers.sort((a, b) {
       final aValue = getField(a);
       final bValue = getField(b);

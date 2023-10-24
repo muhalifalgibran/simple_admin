@@ -7,6 +7,6 @@ import 'package:simple_admin/features/domain/repositories/influencer_repository.
 class GetListInfluencer {
   final repository = getIt<InfluencerRepository>();
 
-  Future<Either<Failure, List<Influencer>>> call(int page) async =>
+  Future<Either<Failure, Influencer>> call(int page) async =>
       await repository.getInfluencer(page);
 }

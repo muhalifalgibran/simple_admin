@@ -3,7 +3,34 @@ import 'dart:math';
 import 'package:simple_admin/features/domain/entities/influencer.dart';
 
 class InfluencerModel extends Influencer {
-  InfluencerModel({
+  const InfluencerModel({
+    required int page,
+    required int perPage,
+    required int total,
+    required int totalPages,
+    required List<InfluencerDataModel> data,
+  }) : super(
+          page: page,
+          perPage: perPage,
+          total: total,
+          totalPages: totalPages,
+          data: data,
+        );
+
+  factory InfluencerModel.fromJson(Map<String, dynamic> json) =>
+      InfluencerModel(
+        page: json['page'],
+        perPage: json['per_page'],
+        total: json['total'],
+        totalPages: json['total_pages'],
+        data: json['data']
+            .map<InfluencerDataModel>((j) => InfluencerDataModel.fromJson(j))
+            .toList(),
+      );
+}
+
+class InfluencerDataModel extends InfluencerData {
+  InfluencerDataModel({
     required String id,
     required String email,
     required String firstName,
@@ -25,7 +52,7 @@ class InfluencerModel extends Influencer {
   // so, we add two colomn and choose its value randomly.
   // so, whenever our app is reload or call the model again
   // the value won't remains the same since it randomly picked
-  factory InfluencerModel.fromJson(Map<String, dynamic> json) {
+  factory InfluencerDataModel.fromJson(Map<String, dynamic> json) {
     Random random = Random();
     final List<String> location = [
       'Jakarta',
@@ -49,7 +76,7 @@ class InfluencerModel extends Influencer {
       'Human Resource',
     ];
 
-    return InfluencerModel(
+    return InfluencerDataModel(
       id: json['id'].toString(),
       email: json['email'],
       firstName: json['first_name'],

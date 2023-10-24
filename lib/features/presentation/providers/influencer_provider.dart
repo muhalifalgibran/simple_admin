@@ -5,7 +5,7 @@ import 'package:simple_admin/features/domain/entities/influencer_data_table.dart
 import 'package:simple_admin/features/domain/usecases/get_list_influencers.dart';
 
 class InfluencerProvider extends ChangeNotifier {
-  List<Influencer> influencers = [];
+  late Influencer influencers;
   InfluencerDataTable? dataTable;
   bool sortAscending = true;
   int? sortColumnIndex;
@@ -17,7 +17,7 @@ class InfluencerProvider extends ChangeNotifier {
 
     api.fold((error) => null, (success) {
       influencers = success;
-      dataTable = InfluencerDataTable(context, influencers);
+      dataTable = InfluencerDataTable(context, influencers.data);
     });
     notifyListeners();
   }
@@ -25,7 +25,7 @@ class InfluencerProvider extends ChangeNotifier {
   // we sort our row based on their column
   // wheter it is ascending or descending
   void sort<T>(
-    Comparable<T> Function(Influencer d) getField,
+    Comparable<T> Function(InfluencerData d) getField,
     int columnIndex,
     bool ascending,
   ) {

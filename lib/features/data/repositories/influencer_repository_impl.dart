@@ -10,7 +10,7 @@ class InfluencerRepositoryImpl implements InfluencerRepository {
   final dataSource = getIt<InfluencerRemoteDataSource>();
 
   @override
-  Future<Either<Failure, List<Influencer>>> getInfluencer(int page) async {
+  Future<Either<Failure, Influencer>> getInfluencer(int page) async {
     try {
       final api = await dataSource.getUser(page);
       return Right(api);
