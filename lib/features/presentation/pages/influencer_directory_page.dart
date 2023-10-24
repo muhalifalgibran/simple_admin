@@ -130,6 +130,12 @@ class _InfluencerDirectoryPageState extends State<InfluencerDirectoryPage> {
                               decoration: const InputDecoration.collapsed(
                                 hintText: 'Search',
                               ),
+                              onChanged: (value) {
+                                context
+                                    .read<InfluencerProvider>()
+                                    .search(value);
+                                setState(() {});
+                              },
                             ),
                           ),
                         ],

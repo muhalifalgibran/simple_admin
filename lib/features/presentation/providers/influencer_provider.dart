@@ -34,7 +34,11 @@ class InfluencerProvider extends ChangeNotifier {
     dataTable!.sort<T>(getField, ascending);
     sortColumnIndex = columnIndex;
     sortAscending = ascending;
-    print('ssss');
+    notifyListeners();
+  }
+
+  void search(String value) {
+    dataTable!.search(value);
     notifyListeners();
   }
 }

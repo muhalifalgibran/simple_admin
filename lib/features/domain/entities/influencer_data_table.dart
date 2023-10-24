@@ -55,11 +55,14 @@ class InfluencerDataTable extends DataTableSource {
     this.context,
     this.influencers, [
     this.hasZebraStripes = false,
-  ]);
+  ]) {
+    _allInfluencers = influencers;
+  }
 
   final BuildContext context;
 
   late List<Influencer> influencers;
+  late List<Influencer> _allInfluencers;
   int _selectedCount = 0;
   bool hasZebraStripes = false;
 
@@ -72,8 +75,18 @@ class InfluencerDataTable extends DataTableSource {
           ? Comparable.compare(aValue, bValue)
           : Comparable.compare(bValue, aValue);
     });
-    print(influencers);
+    notifyListeners();
+  }
 
+  void search(String value) {
+    influencers = _allInfluencers
+        .where((obj) => (obj.firstName.contains(value) ||
+            obj.lastName.contains(value) ||
+            obj.email.contains(value) ||
+            obj.location.toLowerCase().contains(value) ||
+            obj.role.toLowerCase().contains(value)))
+        .toList();
+    print(influencers);
     notifyListeners();
   }
 
