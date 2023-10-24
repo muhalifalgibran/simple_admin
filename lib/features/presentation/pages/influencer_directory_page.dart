@@ -1,7 +1,9 @@
 import 'package:data_table_2/data_table_2.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:simple_admin/features/domain/entities/influencer_data_table.dart';
 import 'package:simple_admin/features/presentation/providers/influencer_provider.dart';
+import 'package:simple_admin/features/presentation/widgets/custom_pager.dart';
 import 'package:simple_admin/features/presentation/widgets/tag_widget.dart';
 
 class InfluencerDirectoryPage extends StatefulWidget {
@@ -13,26 +15,14 @@ class InfluencerDirectoryPage extends StatefulWidget {
 }
 
 class _InfluencerDirectoryPageState extends State<InfluencerDirectoryPage> {
-  void _sort<T>(
-    // Comparable<T> Function(Dessert d) getField,
-    int columnIndex,
-    bool ascending,
-  ) {
-    // _dessertsDataSource.sort<T>(getField, ascending);
-    setState(() {
-      _sortColumnIndex.value = columnIndex;
-      _sortAscending.value = ascending;
-    });
-  }
-
-  final RestorableBool _sortAscending = RestorableBool(true);
-  final RestorableIntN _sortColumnIndex = RestorableIntN(null);
+  PaginatorController? _pageController;
 
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       context.read<InfluencerProvider>().getInfluencer(context, 1);
+      _pageController = PaginatorController();
     });
   }
 
@@ -114,51 +104,115 @@ class _InfluencerDirectoryPageState extends State<InfluencerDirectoryPage> {
                         Expanded(
                           child: TextFormField(
                             decoration: const InputDecoration.collapsed(
-                                hintText: 'Search'),
+                              hintText: 'Search',
+                            ),
                           ),
                         ),
                       ],
                     ),
                   ),
                   // table
-                  Consumer<InfluencerProvider>(
-                    builder: (context, state, child) {
-                      if (state.dataTable == null) {
-                        return Container();
-                      }
-                      return Container(
-                        height: 500,
-                        padding: const EdgeInsets.all(16),
-                        child: PaginatedDataTable2(
-                          source: state.dataTable!,
-                          columnSpacing: 12,
-                          horizontalMargin: 12,
-                          minWidth: 600,
-                          columns: const [
-                            DataColumn2(
-                              label: Text('ID'),
-                            ),
-                            DataColumn(
-                              label: Text('First Name'),
-                            ),
-                            DataColumn(
-                              label: Text('Last Name'),
-                            ),
-                            DataColumn(
-                              label: Text('Email'),
-                            ),
-                            DataColumn(
-                              label: Text('Location'),
-                              numeric: true,
-                            ),
-                            DataColumn(
-                              label: Text('Role'),
-                              numeric: true,
-                            ),
-                          ],
+                  // _pageController.
+                  Container(
+                    height: 500,
+                    padding: const EdgeInsets.all(16),
+                    child: PaginatedDataTable2(
+                      headingRowColor: MaterialStateColor.resolveWith(
+                          (states) => Colors.grey[200]!),
+                      source: context
+                          .select<InfluencerProvider, InfluencerDataTable>(
+                              (value) =>
+                                  value.dataTable ??
+                                  InfluencerDataTable.empty(context)),
+                      columnSpacing: 12,
+                      rowsPerPage: 6,
+                      horizontalMargin: 12,
+                      wrapInCard: true,
+                      minWidth: 800,
+                      sortColumnIndex:
+                          context.read<InfluencerProvider>().sortColumnIndex,
+                      sortAscending:
+                          context.read<InfluencerProvider>().sortAscending,
+                      sortArrowIcon: Icons.keyboard_arrow_up,
+                      sortArrowAnimationDuration: Duration.zero,
+                      controller: _pageController,
+                      empty: Center(
+                          child: Container(
+                              padding: const EdgeInsets.all(20),
+                              color: Colors.grey[200],
+                              child: const Text('No data'))),
+                      header: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            const Text('Table of influencer'),
+                            if (_pageController != null)
+                              PageNumber(controller: _pageController!)
+                          ]),
+                      border: TableBorder(
+                        top: const BorderSide(color: Colors.black),
+                        bottom: BorderSide(color: Colors.grey[300]!),
+                        left: BorderSide(color: Colors.grey[300]!),
+                        right: BorderSide(color: Colors.grey[300]!),
+                        verticalInside: BorderSide(color: Colors.grey[300]!),
+                        horizontalInside:
+                            const BorderSide(color: Colors.grey, width: 1),
+                      ),
+                      columns: [
+                        DataColumn2(
+                          label: const Text('ID'),
+                          size: ColumnSize.S,
+                          onSort: (columnIndex, ascending) {
+                            context.read<InfluencerProvider>().sort<String>(
+                                (d) => d.id, columnIndex, ascending);
+                            setState(() {});
+                          },
                         ),
-                      );
-                    },
+                        const DataColumn(
+                          label: Text('Avatar'),
+                        ),
+                        DataColumn(
+                          label: Text('First Name'),
+                          onSort: (columnIndex, ascending) {
+                            context.read<InfluencerProvider>().sort<String>(
+                                (d) => d.firstName, columnIndex, ascending);
+                            setState(() {});
+                          },
+                        ),
+                        DataColumn(
+                          label: Text('Last Name'),
+                          onSort: (columnIndex, ascending) {
+                            context.read<InfluencerProvider>().sort<String>(
+                                (d) => d.lastName, columnIndex, ascending);
+                            setState(() {});
+                          },
+                        ),
+                        DataColumn2(
+                          label: Text('Email'),
+                          size: ColumnSize.L,
+                          onSort: (columnIndex, ascending) {
+                            context.read<InfluencerProvider>().sort<String>(
+                                (d) => d.email, columnIndex, ascending);
+                            setState(() {});
+                          },
+                        ),
+                        DataColumn(
+                          label: Text('Location'),
+                          onSort: (columnIndex, ascending) {
+                            context.read<InfluencerProvider>().sort<String>(
+                                (d) => d.location, columnIndex, ascending);
+                            setState(() {});
+                          },
+                        ),
+                        DataColumn(
+                          label: Text('Role'),
+                          onSort: (columnIndex, ascending) {
+                            context.read<InfluencerProvider>().sort<String>(
+                                (d) => d.role, columnIndex, ascending);
+                            setState(() {});
+                          },
+                        ),
+                      ],
+                    ),
                   ),
                 ],
               ),

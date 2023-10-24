@@ -10,7 +10,7 @@ class InfluencerRemoteDataSourceImpl implements InfluencerRemoteDataSource {
   final DioClient _client = DioClient();
   @override
   Future<List<Influencer>> getUser(int page) async {
-    final result = await _client.get('users?page=$page&per_page=10');
+    final result = await _client.get('users?page=$page&per_page=6');
 
     var api = result.data['data']
         .map<Influencer>((json) => InfluencerModel.fromJson(json))

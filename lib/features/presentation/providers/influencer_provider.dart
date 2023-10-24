@@ -13,6 +13,8 @@ enum StatusProvider {
 class InfluencerProvider extends ChangeNotifier {
   List<Influencer> influencers = [];
   InfluencerDataTable? dataTable;
+  bool sortAscending = true;
+  int? sortColumnIndex;
 
   void getInfluencer(BuildContext context, int page) async {
     final api = await getIt<GetListInfluencer>().call(page);
@@ -21,6 +23,18 @@ class InfluencerProvider extends ChangeNotifier {
       influencers = success;
       dataTable = InfluencerDataTable(context, influencers);
     });
+    notifyListeners();
+  }
+
+  void sort<T>(
+    Comparable<T> Function(Influencer d) getField,
+    int columnIndex,
+    bool ascending,
+  ) {
+    dataTable!.sort<T>(getField, ascending);
+    sortColumnIndex = columnIndex;
+    sortAscending = ascending;
+    print('ssss');
     notifyListeners();
   }
 }

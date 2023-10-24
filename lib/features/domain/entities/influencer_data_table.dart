@@ -72,6 +72,8 @@ class InfluencerDataTable extends DataTableSource {
           ? Comparable.compare(aValue, bValue)
           : Comparable.compare(bValue, aValue);
     });
+    print(influencers);
+
     notifyListeners();
   }
 
@@ -113,6 +115,14 @@ class InfluencerDataTable extends DataTableSource {
       },
       cells: [
         DataCell(Text(influencer.id)),
+        DataCell(ClipRRect(
+          borderRadius: BorderRadius.circular(8.0),
+          child: Image.network(
+            influencer.avatar,
+            height: 80.0,
+            width: 80.0,
+          ),
+        )),
         DataCell(Text(influencer.firstName)),
         DataCell(Text(influencer.lastName)),
         DataCell(Text(influencer.email)),
