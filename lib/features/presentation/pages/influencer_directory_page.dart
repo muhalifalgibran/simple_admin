@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:simple_admin/features/domain/entities/influencer_data_table.dart';
 import 'package:simple_admin/features/presentation/providers/influencer_provider.dart';
-import 'package:simple_admin/features/presentation/widgets/custom_pager.dart';
+import 'package:simple_admin/features/presentation/widgets/pager_widget.dart';
 import 'package:simple_admin/features/presentation/widgets/tag_widget.dart';
 
 class InfluencerDirectoryPage extends StatefulWidget {
@@ -67,7 +67,6 @@ class _InfluencerDirectoryPageState extends State<InfluencerDirectoryPage> {
             Container(
               padding: const EdgeInsets.all(20),
               child: Column(
-                // mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   // give ir wrap. in case, the tags is full in width
@@ -210,8 +209,23 @@ class _InfluencerDirectoryPageState extends State<InfluencerDirectoryPage> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             const Text('Table of influencer'),
-                            if (_pageController != null)
-                              PageNumber(controller: _pageController!)
+                            PagerWidget(
+                                currentPage: context
+                                        .watch<InfluencerProvider>()
+                                        .influencers
+                                        ?.page ??
+                                    1,
+                                totalPage: context
+                                        .watch<InfluencerProvider>()
+                                        .influencers
+                                        ?.totalPages ??
+                                    1,
+                                onUpdate: (updated) {
+                                  context
+                                      .read<InfluencerProvider>()
+                                      .getInfluencer(context, updated);
+                                  setState(() {});
+                                })
                           ]),
                       border: TableBorder(
                         top: const BorderSide(color: Colors.black),

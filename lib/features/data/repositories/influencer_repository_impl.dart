@@ -6,6 +6,7 @@ import 'package:simple_admin/features/data/datasources/influencer_remote_data_so
 import 'package:simple_admin/features/domain/entities/influencer.dart';
 import 'package:simple_admin/features/domain/repositories/influencer_repository.dart';
 
+// treat the repository as DAO
 class InfluencerRepositoryImpl implements InfluencerRepository {
   final dataSource = getIt<InfluencerRemoteDataSource>();
 

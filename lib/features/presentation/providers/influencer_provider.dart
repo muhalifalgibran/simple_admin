@@ -5,7 +5,7 @@ import 'package:simple_admin/features/domain/entities/influencer_data_table.dart
 import 'package:simple_admin/features/domain/usecases/get_list_influencers.dart';
 
 class InfluencerProvider extends ChangeNotifier {
-  late Influencer influencers;
+  Influencer? influencers;
   InfluencerDataTable? dataTable;
   bool sortAscending = true;
   int? sortColumnIndex;
@@ -17,7 +17,7 @@ class InfluencerProvider extends ChangeNotifier {
 
     api.fold((error) => null, (success) {
       influencers = success;
-      dataTable = InfluencerDataTable(context, influencers.data);
+      dataTable = InfluencerDataTable(context, influencers!.data);
     });
     notifyListeners();
   }
