@@ -21,6 +21,10 @@ class InfluencerModel extends Influencer {
           role: role,
         );
 
+  // since we don't have specific column to be filtered
+  // so, we add two colomn and choose its value randomly.
+  // so, whenever our app is reload or call the model again
+  // the value won't remains the same since it randomly picked
   factory InfluencerModel.fromJson(Map<String, dynamic> json) {
     Random random = Random();
     final List<String> location = [
@@ -36,13 +40,13 @@ class InfluencerModel extends Influencer {
       'Yogyakarta'
     ];
     final List<String> roles = [
-      'food',
-      'travel',
-      'marketing',
-      'backoffice',
-      'engineer',
-      'education',
-      'human resource',
+      'Food',
+      'Travel',
+      'Marketing',
+      'Backoffice',
+      'Engineer',
+      'Education',
+      'Human Resource',
     ];
 
     return InfluencerModel(

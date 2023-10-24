@@ -68,16 +68,38 @@ class _InfluencerDirectoryPageState extends State<InfluencerDirectoryPage> {
                 // mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  // give ir wrap. in case, the tags is full in width
+                  // so we put our tags below other tags
                   Wrap(
-                    // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-
                     children: [
-                      TagWidget(onChange: (value) {}),
-                      TagWidget(onChange: (value) {}),
-                      TagWidget(onChange: (value) {}),
-                      TagWidget(onChange: (value) {}),
-                      TagWidget(onChange: (value) {}),
-                      TagWidget(onChange: (value) {}),
+                      TagWidget(
+                        onChange: (value) {},
+                        items: const [
+                          'Jakarta',
+                          'Bandung',
+                          'Surabaya',
+                          'Makassar',
+                          'Medan',
+                          'Bali',
+                          'Papua',
+                          'Aceh',
+                          'Solo',
+                          'Yogyakarta'
+                        ],
+                      ),
+                      const SizedBox(width: 40),
+                      TagWidget(
+                        onChange: (value) {},
+                        items: const [
+                          'Food',
+                          'Travel',
+                          'Marketing',
+                          'Backoffice',
+                          'Engineer',
+                          'Education',
+                          'Human Resource',
+                        ],
+                      ),
                     ],
                   ),
                   const SizedBox(
@@ -90,25 +112,28 @@ class _InfluencerDirectoryPageState extends State<InfluencerDirectoryPage> {
                   const SizedBox(
                     height: 18,
                   ),
-                  // search
-                  Container(
-                    width: 220,
-                    padding: const EdgeInsets.all(12),
-                    decoration: BoxDecoration(
-                      border: Border.all(),
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    child: Row(
-                      children: [
-                        const Icon(Icons.search),
-                        Expanded(
-                          child: TextFormField(
-                            decoration: const InputDecoration.collapsed(
-                              hintText: 'Search',
+                  // search widget
+                  Card(
+                    elevation: 8,
+                    child: Container(
+                      width: 220,
+                      padding: const EdgeInsets.all(12),
+                      decoration: BoxDecoration(
+                        border: Border.all(),
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: Row(
+                        children: [
+                          const Icon(Icons.search),
+                          Expanded(
+                            child: TextFormField(
+                              decoration: const InputDecoration.collapsed(
+                                hintText: 'Search',
+                              ),
                             ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
                   // table
@@ -171,7 +196,7 @@ class _InfluencerDirectoryPageState extends State<InfluencerDirectoryPage> {
                           label: Text('Avatar'),
                         ),
                         DataColumn(
-                          label: Text('First Name'),
+                          label: const Text('First Name'),
                           onSort: (columnIndex, ascending) {
                             context.read<InfluencerProvider>().sort<String>(
                                 (d) => d.firstName, columnIndex, ascending);
@@ -179,7 +204,7 @@ class _InfluencerDirectoryPageState extends State<InfluencerDirectoryPage> {
                           },
                         ),
                         DataColumn(
-                          label: Text('Last Name'),
+                          label: const Text('Last Name'),
                           onSort: (columnIndex, ascending) {
                             context.read<InfluencerProvider>().sort<String>(
                                 (d) => d.lastName, columnIndex, ascending);
@@ -187,7 +212,7 @@ class _InfluencerDirectoryPageState extends State<InfluencerDirectoryPage> {
                           },
                         ),
                         DataColumn2(
-                          label: Text('Email'),
+                          label: const Text('Email'),
                           size: ColumnSize.L,
                           onSort: (columnIndex, ascending) {
                             context.read<InfluencerProvider>().sort<String>(
@@ -196,7 +221,7 @@ class _InfluencerDirectoryPageState extends State<InfluencerDirectoryPage> {
                           },
                         ),
                         DataColumn(
-                          label: Text('Location'),
+                          label: const Text('Location'),
                           onSort: (columnIndex, ascending) {
                             context.read<InfluencerProvider>().sort<String>(
                                 (d) => d.location, columnIndex, ascending);
@@ -204,7 +229,7 @@ class _InfluencerDirectoryPageState extends State<InfluencerDirectoryPage> {
                           },
                         ),
                         DataColumn(
-                          label: Text('Role'),
+                          label: const Text('Role'),
                           onSort: (columnIndex, ascending) {
                             context.read<InfluencerProvider>().sort<String>(
                                 (d) => d.role, columnIndex, ascending);
