@@ -16,6 +16,8 @@ class InfluencerDirectoryPage extends StatefulWidget {
 
 class _InfluencerDirectoryPageState extends State<InfluencerDirectoryPage> {
   PaginatorController? _pageController;
+  String _locationVal = 'All Location';
+  String _roleValue = 'All Role';
 
   @override
   void initState() {
@@ -29,7 +31,7 @@ class _InfluencerDirectoryPageState extends State<InfluencerDirectoryPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color.fromARGB(255, 245, 244, 237),
+      backgroundColor: Color.fromARGB(255, 120, 119, 119),
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -73,8 +75,16 @@ class _InfluencerDirectoryPageState extends State<InfluencerDirectoryPage> {
                   Wrap(
                     children: [
                       TagWidget(
-                        onChange: (value) {},
+                        value: _locationVal,
+                        onChange: (value) {
+                          context
+                              .read<InfluencerProvider>()
+                              .filter(location: value);
+                          _locationVal = value;
+                          setState(() {});
+                        },
                         items: const [
+                          'All Location',
                           'Jakarta',
                           'Bandung',
                           'Surabaya',
@@ -89,12 +99,20 @@ class _InfluencerDirectoryPageState extends State<InfluencerDirectoryPage> {
                       ),
                       const SizedBox(width: 40),
                       TagWidget(
-                        onChange: (value) {},
+                        value: _roleValue,
+                        onChange: (value) {
+                          context
+                              .read<InfluencerProvider>()
+                              .filter(role: value);
+                          _roleValue = value;
+                          setState(() {});
+                        },
                         items: const [
-                          'Food',
+                          'All Role',
                           'Travel',
                           'Marketing',
                           'Backoffice',
+                          'Food',
                           'Engineer',
                           'Education',
                           'Human Resource',
@@ -105,9 +123,25 @@ class _InfluencerDirectoryPageState extends State<InfluencerDirectoryPage> {
                   const SizedBox(
                     height: 18,
                   ),
-                  const Text(
-                    'Clear all',
-                    style: TextStyle(color: Colors.red),
+                  Card(
+                    elevation: 8,
+                    color: Colors.red,
+                    child: GestureDetector(
+                      onTap: () {
+                        // clear the filter
+                        context.read<InfluencerProvider>().clear();
+                        _locationVal = 'All Location';
+                        _roleValue = 'All Role';
+                        setState(() {});
+                      },
+                      child: Container(
+                        padding: const EdgeInsets.all(8),
+                        child: const Text(
+                          'Clear filter',
+                          style: TextStyle(color: Colors.white),
+                        ),
+                      ),
+                    ),
                   ),
                   const SizedBox(
                     height: 18,

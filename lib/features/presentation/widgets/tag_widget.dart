@@ -1,9 +1,15 @@
 import 'package:flutter/material.dart';
 
 class TagWidget extends StatefulWidget {
-  const TagWidget({this.items, required this.onChange, super.key});
+  const TagWidget({
+    this.items,
+    required this.onChange,
+    required this.value,
+    super.key,
+  });
 
   final List<String>? items;
+  final String value;
   final Function(String value) onChange;
 
   @override
@@ -12,6 +18,7 @@ class TagWidget extends StatefulWidget {
 
 class _TagWidgetState extends State<TagWidget> {
   List<String> list = <String>['One', 'Two', 'Three', 'Four'];
+
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -40,7 +47,7 @@ class _TagWidgetState extends State<TagWidget> {
                   child: Text(value),
                 );
               }).toList(),
-          value: widget.items?.first ?? list.first,
+          value: widget.value,
           onChanged: (value) {
             setState(() {
               widget.onChange(value.toString());

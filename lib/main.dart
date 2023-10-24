@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:simple_admin/core/di/service_locator.dart';
 import 'package:simple_admin/core/network/dio_client.dart';
@@ -26,6 +27,7 @@ class MyApp extends StatelessWidget {
           theme: ThemeData(
             colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
             useMaterial3: true,
+            textTheme: GoogleFonts.montserratTextTheme(),
           ),
           home: InfluencerDirectoryPage()),
     );

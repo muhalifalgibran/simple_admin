@@ -61,7 +61,10 @@ class InfluencerDataTable extends DataTableSource {
 
   final BuildContext context;
 
+  // for data
   late List<Influencer> influencers;
+  // for keep our data remains the original
+  // since we use search and filter
   late List<Influencer> _allInfluencers;
   int _selectedCount = 0;
   bool hasZebraStripes = false;
@@ -86,7 +89,16 @@ class InfluencerDataTable extends DataTableSource {
             obj.location.toLowerCase().contains(value) ||
             obj.role.toLowerCase().contains(value)))
         .toList();
-    print(influencers);
+    notifyListeners();
+  }
+
+  void filter(String? location, String? role) {
+    influencers = _allInfluencers
+        .where((obj) =>
+            (obj.location.contains(location ?? '')) &&
+            (obj.role.contains(role ?? '')))
+        .toList();
+
     notifyListeners();
   }
 
