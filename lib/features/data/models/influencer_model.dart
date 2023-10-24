@@ -46,7 +46,7 @@ class InfluencerModel extends Influencer {
     ];
 
     return InfluencerModel(
-      id: json['id'],
+      id: json['id'].toString(),
       email: json['email'],
       firstName: json['first_name'],
       lastName: json['last_name'],

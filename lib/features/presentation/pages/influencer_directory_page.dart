@@ -1,5 +1,7 @@
 import 'package:data_table_2/data_table_2.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:simple_admin/features/presentation/providers/influencer_provider.dart';
 import 'package:simple_admin/features/presentation/widgets/tag_widget.dart';
 
 class InfluencerDirectoryPage extends StatefulWidget {
@@ -25,6 +27,14 @@ class _InfluencerDirectoryPageState extends State<InfluencerDirectoryPage> {
 
   final RestorableBool _sortAscending = RestorableBool(true);
   final RestorableIntN _sortColumnIndex = RestorableIntN(null);
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      context.read<InfluencerProvider>().getInfluencer(1);
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
