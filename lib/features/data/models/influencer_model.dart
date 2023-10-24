@@ -3,7 +3,7 @@ import 'dart:math';
 import 'package:simple_admin/features/domain/entities/influencer.dart';
 
 class InfluencerModel extends Influencer {
-  const InfluencerModel({
+  InfluencerModel({
     required String id,
     required String email,
     required String firstName,

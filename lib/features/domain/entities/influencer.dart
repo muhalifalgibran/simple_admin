@@ -2,8 +2,9 @@ import 'package:equatable/equatable.dart';
 
 class Influencer extends Equatable {
   final String id, email, firstName, lastName, avatar, location, role;
+  bool selected = false;
 
-  const Influencer({
+  Influencer({
     required this.id,
     required this.email,
     required this.firstName,

@@ -32,7 +32,7 @@ class _InfluencerDirectoryPageState extends State<InfluencerDirectoryPage> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      context.read<InfluencerProvider>().getInfluencer(1);
+      context.read<InfluencerProvider>().getInfluencer(context, 1);
     });
   }
 
@@ -121,44 +121,45 @@ class _InfluencerDirectoryPageState extends State<InfluencerDirectoryPage> {
                     ),
                   ),
                   // table
-                  Container(
-                    height: 500,
-                    padding: const EdgeInsets.all(16),
-                    child: DataTable2(
-                        columnSpacing: 12,
-                        horizontalMargin: 12,
-                        minWidth: 600,
-                        columns: [
-                          DataColumn2(
-                            label: Text('Column A'),
-                            size: ColumnSize.L,
-                          ),
-                          DataColumn(
-                            label: Text('Column B'),
-                          ),
-                          DataColumn(
-                            label: Text('Column C'),
-                          ),
-                          DataColumn(
-                            label: Text('Column D'),
-                          ),
-                          DataColumn(
-                            label: Text('Column NUMBERS'),
-                            numeric: true,
-                          ),
-                        ],
-                        rows: List<DataRow>.generate(
-                            100,
-                            (index) => DataRow(cells: [
-                                  DataCell(Text('A' * (10 - index % 10))),
-                                  DataCell(Text('B' * (10 - (index + 5) % 10))),
-                                  DataCell(Text('C' * (15 - (index + 5) % 10))),
-                                  DataCell(
-                                      Text('D' * (15 - (index + 10) % 10))),
-                                  DataCell(
-                                      Text(((index + 0.1) * 25.4).toString()))
-                                ]))),
-                  )
+                  Consumer<InfluencerProvider>(
+                    builder: (context, state, child) {
+                      if (state.dataTable == null) {
+                        return Container();
+                      }
+                      return Container(
+                        height: 500,
+                        padding: const EdgeInsets.all(16),
+                        child: PaginatedDataTable2(
+                          source: state.dataTable!,
+                          columnSpacing: 12,
+                          horizontalMargin: 12,
+                          minWidth: 600,
+                          columns: const [
+                            DataColumn2(
+                              label: Text('ID'),
+                            ),
+                            DataColumn(
+                              label: Text('First Name'),
+                            ),
+                            DataColumn(
+                              label: Text('Last Name'),
+                            ),
+                            DataColumn(
+                              label: Text('Email'),
+                            ),
+                            DataColumn(
+                              label: Text('Location'),
+                              numeric: true,
+                            ),
+                            DataColumn(
+                              label: Text('Role'),
+                              numeric: true,
+                            ),
+                          ],
+                        ),
+                      );
+                    },
+                  ),
                 ],
               ),
             )
