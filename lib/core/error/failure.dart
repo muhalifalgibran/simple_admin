@@ -43,7 +43,7 @@ class ServerFailure extends Failure {
     this.statusCode,
   });
 
-  final String errorType;
+  final String? errorType;
   final int? statusCode;
 
   @override
